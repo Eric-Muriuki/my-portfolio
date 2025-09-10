@@ -1,0 +1,1421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alex Developer - Web Developer Portfolio</title>
+    <style>
+        /* CSS Variables and Base Styles */
+        :root {
+            --font-size: 16px;
+            --background: #ffffff;
+            --foreground: oklch(0.145 0 0);
+            --card: #ffffff;
+            --card-foreground: oklch(0.145 0 0);
+            --primary: #030213;
+            --primary-foreground: oklch(1 0 0);
+            --secondary: oklch(0.95 0.0058 264.53);
+            --secondary-foreground: #030213;
+            --muted: #ececf0;
+            --muted-foreground: #717182;
+            --accent: #e9ebef;
+            --accent-foreground: #030213;
+            --border: rgba(0, 0, 0, 0.1);
+            --input-background: #f3f3f5;
+            --radius: 0.625rem;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            font-size: var(--font-size);
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--background);
+            color: var(--foreground);
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.5;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        /* Typography */
+        h1 {
+            font-size: 3rem;
+            font-weight: 600;
+            line-height: 1.2;
+        }
+
+        h2 {
+            font-size: 2.5rem;
+            font-weight: 600;
+            line-height: 1.3;
+        }
+
+        h3 {
+            font-size: 1.5rem;
+            font-weight: 500;
+            line-height: 1.4;
+        }
+
+        h4 {
+            font-size: 1.125rem;
+            font-weight: 500;
+            line-height: 1.4;
+        }
+
+        p {
+            font-size: 1rem;
+            font-weight: 400;
+            line-height: 1.6;
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.5rem 1rem;
+            border-radius: var(--radius);
+            font-weight: 500;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: var(--primary-foreground);
+        }
+
+        .btn-primary:hover {
+            opacity: 0.9;
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            color: var(--foreground);
+            border: 1px solid var(--border);
+        }
+
+        .btn-outline:hover {
+            background-color: var(--accent);
+        }
+
+        .btn-ghost {
+            background-color: transparent;
+            color: var(--foreground);
+        }
+
+        .btn-ghost:hover {
+            background-color: var(--accent);
+        }
+
+        .btn-sm {
+            padding: 0.375rem 0.75rem;
+            font-size: 0.875rem;
+        }
+
+        .btn-lg {
+            padding: 0.75rem 1.5rem;
+            font-size: 1.125rem;
+        }
+
+        /* Cards */
+        .card {
+            background-color: var(--card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .card-header {
+            padding: 1.5rem 1.5rem 0;
+        }
+
+        .card-content {
+            padding: 1.5rem;
+        }
+
+        /* Badges */
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.125rem 0.625rem;
+            font-size: 0.75rem;
+            font-weight: 500;
+            border-radius: calc(var(--radius) - 2px);
+            background-color: var(--secondary);
+            color: var(--secondary-foreground);
+        }
+
+        .badge-outline {
+            background-color: transparent;
+            border: 1px solid var(--border);
+            color: var(--foreground);
+        }
+
+        /* Progress Bar */
+        .progress {
+            width: 100%;
+            height: 0.5rem;
+            background-color: var(--muted);
+            border-radius: var(--radius);
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background-color: var(--primary);
+            transition: width 0.5s ease-in-out;
+        }
+
+        /* Header Styles */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background-color: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border);
+            z-index: 1000;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+
+        .logo {
+            font-weight: 500;
+            font-size: 1.125rem;
+        }
+
+        .nav {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-link {
+            color: var(--foreground);
+            text-decoration: none;
+            transition: color 0.2s;
+            cursor: pointer;
+        }
+
+        .nav-link:hover {
+            color: var(--primary);
+        }
+
+        .mobile-menu-btn {
+            display: none;
+        }
+
+        .mobile-nav {
+            display: none;
+            flex-direction: column;
+            gap: 1rem;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .mobile-nav.active {
+            display: flex;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding-top: 4rem;
+        }
+
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .hero-content {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .hero-title {
+            font-size: 4rem;
+            line-height: 1.1;
+        }
+
+        .hero-subtitle {
+            font-size: 2rem;
+            color: var(--muted-foreground);
+        }
+
+        .hero-description {
+            font-size: 1.125rem;
+            color: var(--muted-foreground);
+            max-width: 28rem;
+        }
+
+        .hero-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .hero-social {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .hero-image-container {
+            position: relative;
+        }
+
+        .hero-image {
+            width: 100%;
+            max-width: 28rem;
+            aspect-ratio: 1;
+            object-fit: cover;
+            border-radius: 1rem;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+        }
+
+        .hero-image-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(3, 2, 19, 0.2) 0%, transparent 100%);
+            border-radius: 1rem;
+        }
+
+        /* Section Styles */
+        .section {
+            padding: 5rem 0;
+        }
+
+        .section-muted {
+            background-color: rgba(236, 236, 240, 0.3);
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-title {
+            margin-bottom: 1rem;
+        }
+
+        .section-description {
+            font-size: 1.125rem;
+            color: var(--muted-foreground);
+            max-width: 42rem;
+            margin: 0 auto;
+        }
+
+        /* Grid Layouts */
+        .grid {
+            display: grid;
+            gap: 1.5rem;
+        }
+
+        .grid-2 {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        .grid-3 {
+            grid-template-columns: repeat(3, 1fr);
+        }
+
+        .grid-4 {
+            grid-template-columns: repeat(4, 1fr);
+        }
+
+        /* Skills Section */
+        .skill-item {
+            margin-bottom: 1.5rem;
+        }
+
+        .skill-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .skill-name {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .skill-years {
+            font-size: 0.875rem;
+            color: var(--muted-foreground);
+        }
+
+        .tech-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        /* Projects Section */
+        .project-card {
+            transition: all 0.3s;
+        }
+
+        .project-card:hover {
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .project-image {
+            width: 100%;
+            height: 12rem;
+            object-fit: cover;
+            transition: transform 0.3s;
+        }
+
+        .project-card:hover .project-image {
+            transform: scale(1.05);
+        }
+
+        .project-image-container {
+            position: relative;
+            overflow: hidden;
+            border-radius: var(--radius) var(--radius) 0 0;
+        }
+
+        .project-badge {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+        }
+
+        .project-content {
+            padding: 1.5rem;
+        }
+
+        .project-title {
+            margin-bottom: 0.5rem;
+        }
+
+        .project-description {
+            color: var(--muted-foreground);
+            margin-bottom: 1rem;
+        }
+
+        .project-tech-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .project-buttons {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        /* Contact Section */
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            max-width: 72rem;
+            margin: 0 auto;
+        }
+
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .contact-icon {
+            color: var(--primary);
+            width: 1.25rem;
+            height: 1.25rem;
+        }
+
+        .contact-details h4 {
+            margin-bottom: 0.25rem;
+        }
+
+        .contact-details a {
+            color: var(--muted-foreground);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .contact-details a:hover {
+            color: var(--primary);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .info-box {
+            background-color: rgba(236, 236, 240, 0.5);
+            padding: 1.5rem;
+            border-radius: var(--radius);
+        }
+
+        .info-box h4 {
+            margin-bottom: 0.75rem;
+        }
+
+        .info-box ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .info-box li {
+            font-size: 0.875rem;
+            color: var(--muted-foreground);
+            margin-bottom: 0.5rem;
+        }
+
+        /* Form Styles */
+        .form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .form-label {
+            font-weight: 500;
+        }
+
+        .form-input,
+        .form-textarea {
+            padding: 0.75rem;
+            border: 1px solid var(--border);
+            border-radius: calc(var(--radius) - 2px);
+            background-color: var(--input-background);
+            font-size: 1rem;
+            transition: border-color 0.2s;
+        }
+
+        .form-input:focus,
+        .form-textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .form-textarea {
+            min-height: 7.5rem;
+            resize: vertical;
+        }
+
+        /* Footer */
+        .footer {
+            background-color: rgba(236, 236, 240, 0.5);
+            border-top: 1px solid var(--border);
+            padding: 2rem 0;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-info h4 {
+            margin-bottom: 0.25rem;
+        }
+
+        .footer-info p {
+            font-size: 0.875rem;
+            color: var(--muted-foreground);
+        }
+
+        .footer-social {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .footer-bottom {
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border);
+            text-align: center;
+            font-size: 0.875rem;
+            color: var(--muted-foreground);
+        }
+
+        /* Utilities */
+        .text-center {
+            text-align: center;
+        }
+
+        .text-primary {
+            color: var(--primary);
+        }
+
+        .text-muted {
+            color: var(--muted-foreground);
+        }
+
+        .mb-1 { margin-bottom: 0.25rem; }
+        .mb-2 { margin-bottom: 0.5rem; }
+        .mb-3 { margin-bottom: 0.75rem; }
+        .mb-4 { margin-bottom: 1rem; }
+        .mb-6 { margin-bottom: 1.5rem; }
+        .mb-8 { margin-bottom: 2rem; }
+        .mb-12 { margin-bottom: 3rem; }
+
+        .mt-6 { margin-top: 1.5rem; }
+        .mt-12 { margin-top: 3rem; }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .hero-title {
+                font-size: 3rem;
+            }
+            
+            .grid-4 {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .contact-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav {
+                display: none;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .hero-grid {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .hero-title {
+                font-size: 2.5rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1.5rem;
+            }
+
+            h2 {
+                font-size: 2rem;
+            }
+
+            .grid-2,
+            .grid-3,
+            .grid-4 {
+                grid-template-columns: 1fr;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-content {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+
+            .section {
+                padding: 3rem 0;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 0 0.75rem;
+            }
+
+            .hero-title {
+                font-size: 2rem;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .project-buttons {
+                flex-direction: column;
+            }
+        }
+
+        /* Icons (simplified inline SVGs) */
+        .icon {
+            width: 1rem;
+            height: 1rem;
+            display: inline-block;
+            vertical-align: middle;
+        }
+
+        .icon-lg {
+            width: 1.5rem;
+            height: 1.5rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">Alex Developer</div>
+                
+                <nav class="nav">
+                    <a href="#home" class="nav-link">Home</a>
+                    <a href="#about" class="nav-link">About</a>
+                    <a href="#skills" class="nav-link">Skills</a>
+                    <a href="#projects" class="nav-link">Projects</a>
+                    <a href="#contact" class="nav-link">Contact</a>
+                </nav>
+
+                <button class="btn btn-ghost btn-sm mobile-menu-btn" onclick="toggleMobileMenu()">
+                    <span id="menu-icon">☰</span>
+                </button>
+            </div>
+
+            <nav class="mobile-nav" id="mobile-nav">
+                <a href="#home" class="nav-link" onclick="closeMobileMenu()">Home</a>
+                <a href="#about" class="nav-link" onclick="closeMobileMenu()">About</a>
+                <a href="#skills" class="nav-link" onclick="closeMobileMenu()">Skills</a>
+                <a href="#projects" class="nav-link" onclick="closeMobileMenu()">Projects</a>
+                <a href="#contact" class="nav-link" onclick="closeMobileMenu()">Contact</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="container">
+            <div class="hero-grid">
+                <div class="hero-content">
+                    <div>
+                        <h1 class="hero-title">
+                            Hi, I'm <span class="text-primary">Alex</span>
+                        </h1>
+                        <h2 class="hero-subtitle">Web Developer</h2>
+                        <p class="hero-description">
+                            Experienced in HTML, CSS, JavaScript, MySQL, and PHP. Currently expanding my skills with ReactJS to build modern web applications.
+                        </p>
+                    </div>
+                    
+                    <div class="hero-buttons">
+                        <a href="#projects" class="btn btn-primary">View Projects</a>
+                        <a href="#" class="btn btn-outline">
+                            📄 Download CV
+                        </a>
+                    </div>
+
+                    <div class="hero-social">
+                        <a href="#" class="btn btn-ghost btn-sm">📚</a>
+                        <a href="#" class="btn btn-ghost btn-sm">💼</a>
+                        <a href="#contact" class="btn btn-ghost btn-sm">📧</a>
+                    </div>
+                </div>
+
+                <div class="hero-image-container">
+                    <img 
+                        src="https://images.unsplash.com/photo-1566915896913-549d796d2166?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxkZXZlbG9wZXIlMjBjb2RpbmclMjB3b3Jrc3BhY2V8ZW58MXx8fHwxNzU3NTE0NTk5fDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
+                        alt="Developer workspace"
+                        class="hero-image"
+                    />
+                    <div class="hero-image-overlay"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="section section-muted">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">About Me</h2>
+                <p class="section-description">
+                    I'm a passionate web developer with a strong foundation in traditional web technologies, 
+                    now expanding into modern frameworks to create exceptional digital experiences.
+                </p>
+            </div>
+
+            <div class="grid grid-4 mb-12">
+                <div class="card text-center">
+                    <div class="card-content">
+                        <div style="display: flex; justify-content: center; margin-bottom: 1rem; color: var(--primary);">
+                            🌐
+                        </div>
+                        <h3 class="mb-2">Web Development</h3>
+                        <p style="font-size: 0.875rem; color: var(--muted-foreground);">
+                            3+ years building responsive websites with HTML, CSS, and JavaScript
+                        </p>
+                    </div>
+                </div>
+
+                <div class="card text-center">
+                    <div class="card-content">
+                        <div style="display: flex; justify-content: center; margin-bottom: 1rem; color: var(--primary);">
+                            🗄️
+                        </div>
+                        <h3 class="mb-2">Backend Development</h3>
+                        <p style="font-size: 0.875rem; color: var(--muted-foreground);">
+                            Experienced with PHP and MySQL for dynamic web applications
+                        </p>
+                    </div>
+                </div>
+
+                <div class="card text-center">
+                    <div class="card-content">
+                        <div style="display: flex; justify-content: center; margin-bottom: 1rem; color: var(--primary);">
+                            💻
+                        </div>
+                        <h3 class="mb-2">Modern JavaScript</h3>
+                        <p style="font-size: 0.875rem; color: var(--muted-foreground);">
+                            Proficient in ES6+ features and modern development practices
+                        </p>
+                    </div>
+                </div>
+
+                <div class="card text-center">
+                    <div class="card-content">
+                        <div style="display: flex; justify-content: center; margin-bottom: 1rem; color: var(--primary);">
+                            🚀
+                        </div>
+                        <h3 class="mb-2">Learning React</h3>
+                        <p style="font-size: 0.875rem; color: var(--muted-foreground);">
+                            Currently mastering ReactJS to build modern, interactive UIs
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div style="max-width: 48rem; margin: 0 auto;">
+                <div class="grid grid-2">
+                    <div>
+                        <h3 class="mb-4">My Journey</h3>
+                        <p class="text-muted mb-4">
+                            I started my web development journey with the fundamentals - HTML, CSS, and JavaScript. 
+                            Over the years, I've built numerous projects using PHP and MySQL, creating dynamic 
+                            websites and web applications.
+                        </p>
+                        <p class="text-muted">
+                            Now I'm excited to be learning ReactJS, embracing component-based architecture and 
+                            modern development patterns to build more scalable and maintainable applications.
+                        </p>
+                    </div>
+                    <div>
+                        <h3 class="mb-4">What I Bring</h3>
+                        <ul style="list-style: none; padding: 0; color: var(--muted-foreground);">
+                            <li style="margin-bottom: 0.5rem;">• Strong foundation in web fundamentals</li>
+                            <li style="margin-bottom: 0.5rem;">• Experience with server-side development</li>
+                            <li style="margin-bottom: 0.5rem;">• Database design and optimization</li>
+                            <li style="margin-bottom: 0.5rem;">• Responsive design principles</li>
+                            <li style="margin-bottom: 0.5rem;">• Problem-solving mindset</li>
+                            <li style="margin-bottom: 0.5rem;">• Continuous learning approach</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Skills & Technologies</h2>
+                <p class="section-description">
+                    A comprehensive overview of my technical skills and the technologies I work with.
+                </p>
+            </div>
+
+            <div class="grid grid-2">
+                <div>
+                    <h3 class="mb-6">Technical Proficiency</h3>
+                    <div>
+                        <div class="skill-item">
+                            <div class="skill-header">
+                                <span class="skill-name">
+                                    HTML/CSS
+                                </span>
+                                <span class="skill-years">3+ years</span>
+                            </div>
+                            <div class="progress">
+                                <div class="progress-bar" style="width: 90%"></div>
+                            </div>
+                        </div>
+
+                        <div class="skill-item">
+                            <div class="skill-header">
+                                <span class="skill-name">
+                                    JavaScript
+                                </span>
+                                <span class="skill-years">3+ years</span>
+                            </div>
+                            <div class="progress">
+                                <div class="progress-bar" style="width: 85%"></div>
+                            </div>
+                        </div>
+
+                        <div class="skill-item">
+                            <div class="skill-header">
+                                <span class="skill-name">
+                                    PHP
+                                </span>
+                                <span class="skill-years">2+ years</span>
+                            </div>
+                            <div class="progress">
+                                <div class="progress-bar" style="width: 80%"></div>
+                            </div>
+                        </div>
+
+                        <div class="skill-item">
+                            <div class="skill-header">
+                                <span class="skill-name">
+                                    MySQL
+                                </span>
+                                <span class="skill-years">2+ years</span>
+                            </div>
+                            <div class="progress">
+                                <div class="progress-bar" style="width: 75%"></div>
+                            </div>
+                        </div>
+
+                        <div class="skill-item">
+                            <div class="skill-header">
+                                <span class="skill-name">
+                                    ReactJS
+                                    <span class="badge" style="margin-left: 0.5rem;">Learning</span>
+                                </span>
+                                <span class="skill-years">Learning</span>
+                            </div>
+                            <div class="progress">
+                                <div class="progress-bar" style="width: 60%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="display: flex; flex-direction: column; gap: 2rem;">
+                    <div>
+                        <h3 class="mb-6">Technologies & Tools</h3>
+                        <div class="tech-tags">
+                            <span class="badge badge-outline">HTML5</span>
+                            <span class="badge badge-outline">CSS3</span>
+                            <span class="badge badge-outline">JavaScript (ES6+)</span>
+                            <span class="badge badge-outline">PHP</span>
+                            <span class="badge badge-outline">MySQL</span>
+                            <span class="badge badge-outline">ReactJS</span>
+                            <span class="badge badge-outline">Git</span>
+                            <span class="badge badge-outline">Responsive Design</span>
+                            <span class="badge badge-outline">RESTful APIs</span>
+                            <span class="badge badge-outline">JSON</span>
+                            <span class="badge badge-outline">AJAX</span>
+                            <span class="badge badge-outline">Bootstrap</span>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h3 class="mb-6">Currently Learning</h3>
+                        <div class="tech-tags">
+                            <span class="badge">React Hooks</span>
+                            <span class="badge">Component Architecture</span>
+                            <span class="badge">State Management</span>
+                            <span class="badge">Modern JavaScript</span>
+                            <span class="badge">JSX</span>
+                            <span class="badge">NPM/Package Management</span>
+                        </div>
+                    </div>
+
+                    <div class="info-box">
+                        <h4>Learning Goals</h4>
+                        <ul>
+                            <li>• Master React hooks and state management</li>
+                            <li>• Build full-stack applications with React</li>
+                            <li>• Learn modern deployment practices</li>
+                            <li>• Explore React ecosystem (Next.js, testing)</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="section section-muted">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Projects</h2>
+                <p class="section-description">
+                    A showcase of my work, from traditional PHP applications to my latest React learning projects.
+                </p>
+            </div>
+
+            <div class="grid grid-2">
+                <div class="card project-card">
+                    <div class="project-image-container">
+                        <img 
+                            src="https://images.unsplash.com/photo-1677214467820-ab069619bbb6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtb2Rlcm4lMjB3ZWIlMjBkZXNpZ258ZW58MXx8fHwxNzU3NDM5NzkyfDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
+                            alt="E-Commerce Website"
+                            class="project-image"
+                        />
+                    </div>
+                    
+                    <div class="card-header">
+                        <h3>E-Commerce Website</h3>
+                    </div>
+
+                    <div class="card-content" style="padding-top: 0;">
+                        <p class="project-description">
+                            A full-featured online store built with PHP and MySQL, featuring user authentication, shopping cart, and payment integration.
+                        </p>
+
+                        <div class="project-tech-tags">
+                            <span class="badge badge-outline">PHP</span>
+                            <span class="badge badge-outline">MySQL</span>
+                            <span class="badge badge-outline">JavaScript</span>
+                            <span class="badge badge-outline">CSS3</span>
+                            <span class="badge badge-outline">HTML5</span>
+                        </div>
+
+                        <div class="project-buttons">
+                            <a href="#" class="btn btn-outline btn-sm">
+                                📚 Code
+                            </a>
+                            <a href="#" class="btn btn-primary btn-sm">
+                                🔗 Live Demo
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card project-card">
+                    <div class="project-image-container">
+                        <img 
+                            src="https://images.unsplash.com/photo-1740174459713-26c0438cf391?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwaHAlMjBteXNxbCUyMGRhc2hib2FyZHxlbnwxfHx8fDE3NTc1MTgzNzd8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
+                            alt="Dashboard Analytics"
+                            class="project-image"
+                        />
+                    </div>
+                    
+                    <div class="card-header">
+                        <h3>Dashboard Analytics</h3>
+                    </div>
+
+                    <div class="card-content" style="padding-top: 0;">
+                        <p class="project-description">
+                            Interactive dashboard for data visualization with real-time updates, built using PHP backend and dynamic JavaScript frontend.
+                        </p>
+
+                        <div class="project-tech-tags">
+                            <span class="badge badge-outline">PHP</span>
+                            <span class="badge badge-outline">MySQL</span>
+                            <span class="badge badge-outline">Chart.js</span>
+                            <span class="badge badge-outline">AJAX</span>
+                            <span class="badge badge-outline">Bootstrap</span>
+                        </div>
+
+                        <div class="project-buttons">
+                            <a href="#" class="btn btn-outline btn-sm">
+                                📚 Code
+                            </a>
+                            <a href="#" class="btn btn-primary btn-sm">
+                                🔗 Live Demo
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card project-card">
+                    <div class="project-image-container">
+                        <img 
+                            src="https://images.unsplash.com/photo-1670057046254-3b5095eb4b66?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxyZWFjdCUyMGphdmFzY3JpcHQlMjBjb2RlfGVufDF8fHx8MTc1NzQxNzg3M3ww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
+                            alt="React Learning Project"
+                            class="project-image"
+                        />
+                        <span class="badge project-badge">Learning Project</span>
+                    </div>
+                    
+                    <div class="card-header">
+                        <h3>React Learning Project</h3>
+                    </div>
+
+                    <div class="card-content" style="padding-top: 0;">
+                        <p class="project-description">
+                            My first React application - a task management app built while learning React fundamentals, hooks, and component architecture.
+                        </p>
+
+                        <div class="project-tech-tags">
+                            <span class="badge badge-outline">ReactJS</span>
+                            <span class="badge badge-outline">JavaScript</span>
+                            <span class="badge badge-outline">CSS3</span>
+                            <span class="badge badge-outline">Local Storage</span>
+                        </div>
+
+                        <div class="project-buttons">
+                            <a href="#" class="btn btn-outline btn-sm">
+                                📚 Code
+                            </a>
+                            <a href="#" class="btn btn-primary btn-sm">
+                                🔗 Live Demo
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card project-card">
+                    <div class="project-image-container">
+                        <img 
+                            src="https://images.unsplash.com/photo-1566915896913-549d796d2166?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxkZXZlbG9wZXIlMjBjb2RpbmclMjB3b3Jrc3BhY2V8ZW58MXx8fHwxNzU3NTE0NTk5fDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
+                            alt="Portfolio Website"
+                            class="project-image"
+                        />
+                    </div>
+                    
+                    <div class="card-header">
+                        <h3>Portfolio Website</h3>
+                    </div>
+
+                    <div class="card-content" style="padding-top: 0;">
+                        <p class="project-description">
+                            A responsive portfolio website showcasing my work and skills, built with HTML, CSS, and JavaScript with smooth animations.
+                        </p>
+
+                        <div class="project-tech-tags">
+                            <span class="badge badge-outline">HTML5</span>
+                            <span class="badge badge-outline">CSS3</span>
+                            <span class="badge badge-outline">JavaScript</span>
+                            <span class="badge badge-outline">Responsive Design</span>
+                        </div>
+
+                        <div class="project-buttons">
+                            <a href="#" class="btn btn-outline btn-sm">
+                                📚 Code
+                            </a>
+                            <a href="#" class="btn btn-primary btn-sm">
+                                🔗 Live Demo
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-center mt-12">
+                <a href="#" class="btn btn-outline btn-lg">
+                    📚 View All Projects on GitHub
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Get In Touch</h2>
+                <p class="section-description">
+                    I'm always interested in new opportunities and exciting projects. 
+                    Let's connect and discuss how we can work together.
+                </p>
+            </div>
+
+            <div class="contact-grid">
+                <div class="contact-info">
+                    <div>
+                        <h3 class="mb-6">Contact Information</h3>
+                        <div style="display: flex; flex-direction: column; gap: 1rem;">
+                            <div class="contact-item">
+                                <div class="contact-icon">📧</div>
+                                <div class="contact-details">
+                                    <h4>Email</h4>
+                                    <a href="mailto:alex.developer@email.com">alex.developer@email.com</a>
+                                </div>
+                            </div>
+
+                            <div class="contact-item">
+                                <div class="contact-icon">📱</div>
+                                <div class="contact-details">
+                                    <h4>Phone</h4>
+                                    <a href="tel:+15551234567">+1 (555) 123-4567</a>
+                                </div>
+                            </div>
+
+                            <div class="contact-item">
+                                <div class="contact-icon">📍</div>
+                                <div class="contact-details">
+                                    <h4>Location</h4>
+                                    <div class="text-muted">New York, NY</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h3 class="mb-6">Follow Me</h3>
+                        <div class="social-links">
+                            <a href="#" class="btn btn-outline btn-sm">
+                                📚 GitHub
+                            </a>
+                            <a href="#" class="btn btn-outline btn-sm">
+                                💼 LinkedIn
+                            </a>
+                            <a href="mailto:alex.developer@email.com" class="btn btn-outline btn-sm">
+                                📧 Email
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="info-box">
+                        <h4>What I'm Looking For</h4>
+                        <ul>
+                            <li>• Frontend/Backend development opportunities</li>
+                            <li>• React learning and mentorship opportunities</li>
+                            <li>• Freelance web development projects</li>
+                            <li>• Collaborative learning projects</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h3>Send Me a Message</h3>
+                    </div>
+                    <div class="card-content">
+                        <form class="form" onsubmit="handleSubmit(event)">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="firstName" class="form-label">First Name</label>
+                                    <input type="text" id="firstName" class="form-input" placeholder="John" required />
+                                </div>
+                                <div class="form-group">
+                                    <label for="lastName" class="form-label">Last Name</label>
+                                    <input type="text" id="lastName" class="form-input" placeholder="Doe" required />
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="email" class="form-label">Email</label>
+                                <input type="email" id="email" class="form-input" placeholder="john@example.com" required />
+                            </div>
+
+                            <div class="form-group">
+                                <label for="subject" class="form-label">Subject</label>
+                                <input type="text" id="subject" class="form-input" placeholder="Project Inquiry" required />
+                            </div>
+
+                            <div class="form-group">
+                                <label for="message" class="form-label">Message</label>
+                                <textarea 
+                                    id="message" 
+                                    class="form-textarea"
+                                    placeholder="Tell me about your project or opportunity..."
+                                    required
+                                ></textarea>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary" style="width: 100%;">
+                                Send Message
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-info">
+                    <h4>Alex Developer</h4>
+                    <p>Building the web, one line of code at a time.</p>
+                </div>
+
+                <div class="footer-social">
+                    <a href="#" class="btn btn-ghost btn-sm">📚</a>
+                    <a href="#" class="btn btn-ghost btn-sm">💼</a>
+                    <a href="#contact" class="btn btn-ghost btn-sm">📧</a>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; <span id="current-year"></span> Alex Developer. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu functionality
+        function toggleMobileMenu() {
+            const mobileNav = document.getElementById('mobile-nav');
+            const menuIcon = document.getElementById('menu-icon');
+            
+            mobileNav.classList.toggle('active');
+            menuIcon.textContent = mobileNav.classList.contains('active') ? '✕' : '☰';
+        }
+
+        function closeMobileMenu() {
+            const mobileNav = document.getElementById('mobile-nav');
+            const menuIcon = document.getElementById('menu-icon');
+            
+            mobileNav.classList.remove('active');
+            menuIcon.textContent = '☰';
+        }
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Form submission handler
+        function handleSubmit(event) {
+            event.preventDefault();
+            
+            // Get form data
+            const formData = new FormData(event.target);
+            const firstName = document.getElementById('firstName').value;
+            const lastName = document.getElementById('lastName').value;
+            const email = document.getElementById('email').value;
+            const subject = document.getElementById('subject').value;
+            const message = document.getElementById('message').value;
+            
+            // Simple validation
+            if (!firstName || !lastName || !email || !subject || !message) {
+                alert('Please fill in all fields.');
+                return;
+            }
+            
+            // Simulate form submission
+            alert(`Thank you, ${firstName}! Your message has been sent. I'll get back to you soon.`);
+            
+            // Reset form
+            event.target.reset();
+        }
+
+        // Set current year in footer
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+
+        // Animate progress bars on scroll
+        function animateProgressBars() {
+            const progressBars = document.querySelectorAll('.progress-bar');
+            
+            progressBars.forEach(bar => {
+                const rect = bar.getBoundingClientRect();
+                const isVisible = rect.top < window.innerHeight && rect.bottom > 0;
+                
+                if (isVisible) {
+                    const width = bar.style.width;
+                    bar.style.width = '0%';
+                    setTimeout(() => {
+                        bar.style.width = width;
+                    }, 100);
+                }
+            });
+        }
+
+        // Scroll event listener for progress bar animation
+        window.addEventListener('scroll', () => {
+            animateProgressBars();
+        });
+
+        // Header background on scroll
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('.header');
+            if (window.scrollY > 100) {
+                header.style.backgroundColor = 'rgba(255, 255, 255, 0.95)';
+            } else {
+                header.style.backgroundColor = 'rgba(255, 255, 255, 0.8)';
+            }
+        });
+
+        // Initialize animations on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            // Animate progress bars if skills section is visible
+            setTimeout(animateProgressBars, 500);
+            
+            // Add subtle fade-in animation for cards
+            const cards = document.querySelectorAll('.card');
+            cards.forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                
+                setTimeout(() => {
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, index * 100);
+            });
+        });
+
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', (e) => {
+            const mobileNav = document.getElementById('mobile-nav');
+            const menuBtn = document.querySelector('.mobile-menu-btn');
+            
+            if (mobileNav.classList.contains('active') && 
+                !mobileNav.contains(e.target) && 
+                !menuBtn.contains(e.target)) {
+                closeMobileMenu();
+            }
+        });
+    </script>
+</body>
+</html>
